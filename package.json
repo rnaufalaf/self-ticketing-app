@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx nodemon app.js",
-    "db-install": "npx sequelize-cli db:create && npx sequelize-cli db:migrate"
+    "db-install": "npx sequelize-cli db:create && npx sequelize-cli db:migrate",
+    "db-undo": "npx sequelize-cli db:migrate:undo:all"
   },
   "keywords": [],
   "author": "",

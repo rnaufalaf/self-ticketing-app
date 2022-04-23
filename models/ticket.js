@@ -8,15 +8,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      Ticket.belongsTo(models.Destination);
       Ticket.belongsToMany(models.Tourist, { through: models.Summary });
     }
   }
   Ticket.init(
     {
-      ticket_number: DataTypes.STRING,
-      destination: DataTypes.STRING,
-      type: DataTypes.STRING,
-      visit_date: DataTypes.DATE,
+      DestinationId: DataTypes.INTEGER,
+      visit_date: DataTypes.STRING,
       price: DataTypes.INTEGER,
       qty: DataTypes.INTEGER,
     },
