@@ -1,9 +1,7 @@
 const route = require("express").Router();
 
 route.get("/", (req, res) => {
-  res.json({
-    message: "Home Page",
-  });
+  res.render("index.ejs");
 });
 
 const TicketRoute = require("./TicketRoute");
