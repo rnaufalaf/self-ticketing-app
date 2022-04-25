@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <%- include('header') %>
+  </head>
+  <body>
+    <header class="header">Add Tourist</header>
+    <p style="font-weight: bold; padding-left: 10%">
+      First, input your credentials below
+    </p>
+    <div class="py-3">
+      <form class="layout" action="/tourist/add/" method="post">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" name="name" />
+        </div>
+        <div class="mb-3">
+          <label for="age" class="form-label">Age</label>
+          <input type="number" class="form-control" id="age" name="age" />
+        </div>
+        <div class="mb-3">
+          <label for="id_card_number" class="form-label">ID</label>
+          <input
+            type="text"
+            class="form-control"
+            id="id_card_number"
+            name="id_card_number"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="phone_number" class="form-label">Phone Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="phone_number"
+            name="phone_number"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="nationality" class="form-label">Nationality</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nationality"
+            name="nationality"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="photo" class="form-label">Photo URL</label>
+          <input type="text" class="form-control" id="photo" name="photo" />
+        </div>
+        <div align="center">
+          <button type="submit" value="Submit" class="btn btn-primary">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

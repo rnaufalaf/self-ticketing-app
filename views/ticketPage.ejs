@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tickets Page</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <%- include('header') %>
+  </head>
+  <body>
+    <div class="row">
+      <header class="header">Recently Bought Tickets</header>
+      <a
+        class="col-sm-3"
+        style="
+          text-decoration: none;
+          font-weight: bold;
+          padding-top: 10px;
+          padding-left: 70px;
+          position: absolute;
+          right: 0;
+        "
+        href="/tourist/addTourist"
+        ><i class="fa fa-plus-square px-2"></i>Add Ticket</a
+      >
+    </div>
+    <div class="container-fluid py-3 px-5">
+      <div class="row">
+        <% summariesObj.destinations.forEach((destination) => { %>
+        <div class="col-sm-3">
+          <div class="card" style="width: 18rem">
+            <img src="<%= destination.image %>" class="card-img-top" />
+            <div class="card-body">
+              <h5 class="card-title"><%= destination.name %></h5>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </body>
+</html>

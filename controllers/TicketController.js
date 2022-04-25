@@ -1,12 +1,49 @@
-const { Ticket, Summary, Destination } = require("../models");
+const { Ticket, Summary, Destination, Tourist } = require("../models");
 
 class TicketController {
   static async getTickets(req, res) {
     try {
-      let tickets = await Ticket.findAll({
-        include: [Destination],
+      let summaries = await Summary.findAll({
+        include: [Ticket, Tourist],
       });
-      res.json(tickets);
+
+      let summariesObj = {};
+      let tickets = [];
+      let tourists = [];
+      let destinationIds = [];
+
+      if (summaries.length !== 0) {
+        tickets = summaries.map((summary) => {
+          return summary.Ticket.dataValues;
+        });
+        tourists = summaries.map((summary) => {
+          return summary.Tourist.dataValues;
+        });
+
+        destinationIds = summaries.map((summary) => {
+          return summary.Ticket.dataValues.DestinationId;
+        });
+
+        let destination = await Destination.findAll({
+          attributes: ["name", "image"],
+          where: {
+            id: destinationIds,
+          },
+        });
+
+        let destinations = destination.map((data) => {
+          return data.dataValues;
+        });
+
+        summariesObj = {
+          tickets,
+          tourists,
+          destinations,
+        };
+
+        console.log(summariesObj);
+      }
+      res.render("ticketPage.ejs", { summariesObj });
     } catch (err) {
       res.json(err);
     }
@@ -26,42 +63,32 @@ class TicketController {
       res.json(err);
     }
   }
+  static async displayAddTicketForm(req, res) {
+    res.render("addTouristForm.ejs");
+  }
   static async addTicket(req, res) {
     const touristId = Number(req.params.TouristId);
     console.log(touristId);
     const { DestinationId, visit_date, price, qty } = req.body;
+    console.log(DestinationId);
 
-    let destination = await Destination.findOne({
-      where: {
-        id: DestinationId,
-      },
+    let ticketData = await Ticket.create({
+      DestinationId,
+      visit_date,
+      price,
+      qty,
     });
 
-    if (destination !== null) {
-      let ticketData = await Ticket.create({
-        DestinationId,
-        visit_date,
-        price,
-        qty,
-      });
+    await Summary.create({
+      TicketId: ticketData.dataValues.id,
+      TouristId: touristId,
+    });
 
-      await Summary.create({
-        TicketId: ticketData.dataValues.id,
-        TouristId: touristId,
-      });
-
-      res.json({
-        message: `Ticket to ${destination.dataValues.name} has been added`,
-      });
-    } else {
-      res.json({
-        message: "Can't add ticket",
-      });
-    }
+    res.redirect("/ticket");
   }
   static async deleteTicket(req, res) {
     const id = Number(req.params.id);
-
+    const touristId = Number(req.params.touristId);
     try {
       await Ticket.destroy({
         where: {
@@ -74,17 +101,25 @@ class TicketController {
           TicketId: id,
         },
       });
-      res.json({
-        message: `Ticket has been deleted`,
-      });
+      res.redirect(`/tourist/${touristId}`);
     } catch {
       res.json({
         message: `Can't delete ticket ${id}`,
       });
     }
   }
+  static async displayUpdateTicketForm(req, res) {
+    const touristId = Number(req.params.touristId);
+    const id = Number(req.params.id);
+    let ticket = await Ticket.findOne({
+      where: { id: id },
+    });
+    let destinations = await Destination.findAll();
+    res.render("editTicketForm.ejs", { id, destinations, ticket, touristId });
+  }
   static async updateTicket(req, res) {
     const id = Number(req.params.id);
+    const touristId = Number(req.params.touristId);
     const { DestinationId, visit_date, price, qty } = req.body;
 
     try {
@@ -97,9 +132,7 @@ class TicketController {
         }
       );
 
-      res.json({
-        message: `Ticket ${id} has been updated`,
-      });
+      res.redirect(`/tourist/${touristId}`);
     } catch {
       res.json({
         message: "Can't update ticket",

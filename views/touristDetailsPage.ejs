@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tourist Details Page</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <%- include('header') %>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header" align="center">Tourist Information</header>
+      <div align="center" class="photo-container">
+        <img src="<%= tourist.photo %>" class="photo" />
+      </div>
+      <div class="row py-4" style="margin-left: 42%">
+        <div class="col-sm-2">
+          <a
+            class="btn btn-primary"
+            href="/tourist/updateForm/<%= tourist.id %>"
+            >Edit</a
+          >
+        </div>
+        <div class="col-sm-2">
+          <a class="btn btn-danger" href="/tourist/delete/<%= tourist.id %>"
+            >Delete</a
+          >
+        </div>
+      </div>
+      <div class="container py-3">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td>Name</td>
+              <td><%= tourist.name %></td>
+            </tr>
+            <tr>
+              <td>Age</td>
+              <td><%= tourist.age %></td>
+            </tr>
+            <tr>
+              <td>ID Number</td>
+              <td><%= tourist.id_card_number %></td>
+            </tr>
+            <tr>
+              <td>Phone Number</td>
+              <td><%= tourist.phone_number %></td>
+            </tr>
+            <tr>
+              <td>Nationality</td>
+              <td><%= tourist.nationality %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <header class="header" align="center">Your Tickets</header>
+      <div class="row py-3">
+        <% destinations.forEach((destination) => { %>
+        <div class="col-sm-3">
+          <div class="card" style="width: 18rem">
+            <img src="<%= destination.image %>" class="card-img-top" />
+            <div class="card-body">
+              <h5 class="card-title"><%= destination.name %></h5>
+              <div class="row">
+                <% tourist.dataValues.Tickets.forEach((ticket) => { %>
+                <div class="col">
+                  <p>Visit Date :</p>
+                </div>
+                <div class="col">
+                  <p class="card-text"><%= ticket.visit_date %></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <p>Quantity :</p>
+                </div>
+                <div class="col">
+                  <p class="card-text"><%= ticket.qty %></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <a
+                    href="/ticket/updateForm/<%= tourist.id %>/<%= ticket.id %>"
+                    class="btn btn-primary"
+                    >Edit</a
+                  >
+                </div>
+                <div class="col">
+                  <a
+                    href="/ticket/delete/<%= tourist.id %>/<%= ticket.id %>"
+                    class="btn btn-danger"
+                    >Delete</a
+                  >
+                </div>
+              </div>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </body>
+</html>

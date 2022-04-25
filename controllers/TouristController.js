@@ -6,23 +6,38 @@ class TouristController {
       let tourists = await Tourist.findAll({
         include: [Ticket],
       });
-      res.json(tourists);
+      res.render("touristPage.ejs", { tourists });
     } catch (err) {
       res.json(err);
     }
   }
   static async getTourist(req, res) {
     const id = Number(req.params.id);
-    console.log(id);
     try {
       let tourist = await Tourist.findOne({
         where: { id: id },
         include: [Ticket],
       });
-      res.json(tourist);
+
+      let destinationIds = tourist.dataValues.Tickets.map((ticket) => {
+        return ticket.dataValues.DestinationId;
+      });
+
+      let destinations = await Destination.findAll({
+        where: {
+          id: destinationIds,
+        },
+      });
+      // tourist.dataValues.Tickets.map((ticket) => {
+      //   console.log(ticket);
+      // });
+      res.render("touristDetailsPage.ejs", { tourist, destinations });
     } catch (err) {
       res.json(err);
     }
+  }
+  static async displayAddTouristForm(req, res) {
+    res.render("addTouristForm.ejs");
   }
   static async addTourist(req, res) {
     const { name, age, id_card_number, phone_number, nationality, photo } =
@@ -36,7 +51,8 @@ class TouristController {
         nationality,
         photo,
       });
-      res.json({ message: `Tourist ${name} has been added` });
+
+      res.redirect("/tourist");
     } catch (err) {
       res.json(err);
     }
@@ -48,10 +64,18 @@ class TouristController {
       await Tourist.destroy({
         where: { id: id },
       });
-      res.json({ message: `Tourist ${id} has been deleted` });
+      res.redirect("/tourist");
     } catch (err) {
       res.json({ message: "Couldn't delete tourist" });
     }
+  }
+  static async displayUpdateTouristForm(req, res) {
+    const id = Number(req.params.id);
+    let tourist = await Tourist.findOne({
+      where: { id: id },
+    });
+    console.log(tourist);
+    res.render("editTouristForm.ejs", { id, tourist });
   }
   static async updateTourist(req, res) {
     const id = Number(req.params.id);
@@ -70,7 +94,7 @@ class TouristController {
         },
         { where: { id: id } }
       );
-      res.json({ message: `Tourist ${id} has been updated` });
+      res.redirect(`/tourist/${id}`);
     } catch {
       res.json({ message: "Couldn't update tourist" });
     }

@@ -22,3 +22,19 @@ form.layout {
   padding-left: 10%;
   padding-right: 10%;
 }
+
+img.avatar {
+  padding: 3px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+div.photo-container {
+  margin-left: 20px;
+}
+
+img.photo {
+  width: 20%;
+  height: 20%;
+}

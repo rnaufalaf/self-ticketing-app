@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <%- include('header') %>
+  </head>
+  <body>
+    <header class="header">Edit Ticket</header>
+    <div class="py-3">
+      <form
+        class="layout"
+        action="/ticket/update/<%= touristId %>/<%= id %>"
+        method="post"
+      >
+        <div class="row">
+          <% destinations.forEach((destination) => { %>
+          <div class="col-sm-3" style="justify-content: center">
+            <div class="card" style="width: 18rem" align="center">
+              <img src="<%= destination.image %>" class="card-img-top" />
+              <div class="card-body">
+                <h5 class="card-title"><%= destination.name %></h5>
+                <h5 class="card-title"><%= destination.id %></h5>
+                <input
+                  type="radio"
+                  id="DestinationId"
+                  name="DestinationId"
+                  value="<%= destination.id %>"
+                />
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+        <div class="mb-3">
+          <label for="visit_date" class="form-label">Visit Date</label>
+          <input
+            type="text"
+            class="form-control"
+            id="visit_date"
+            name="visit_date"
+            value="<%= ticket.visit_date %>"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="qty" class="form-label">Quantity</label>
+          <input
+            type="number"
+            class="form-control"
+            id="qty"
+            name="qty"
+            value="<%= ticket.qty %>"
+          />
+        </div>
+        <div align="center">
+          <button type="submit" value="Submit" class="btn btn-primary">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
