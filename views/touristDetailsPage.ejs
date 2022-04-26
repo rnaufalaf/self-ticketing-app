@@ -59,51 +59,51 @@
         </table>
       </div>
       <header class="header" align="center">Your Tickets</header>
-      <div class="row py-3">
-        <% destinations.forEach((destination) => { %>
-        <div class="col-sm-3">
-          <div class="card" style="width: 18rem">
-            <img src="<%= destination.image %>" class="card-img-top" />
-            <div class="card-body">
-              <h5 class="card-title"><%= destination.name %></h5>
-              <div class="row">
-                <% tourist.dataValues.Tickets.forEach((ticket) => { %>
-                <div class="col">
-                  <p>Visit Date :</p>
-                </div>
-                <div class="col">
-                  <p class="card-text"><%= ticket.visit_date %></p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <p>Quantity :</p>
-                </div>
-                <div class="col">
-                  <p class="card-text"><%= ticket.qty %></p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <a
-                    href="/ticket/updateForm/<%= tourist.id %>/<%= ticket.id %>"
-                    class="btn btn-primary"
-                    >Edit</a
-                  >
-                </div>
-                <div class="col">
-                  <a
-                    href="/ticket/delete/<%= tourist.id %>/<%= ticket.id %>"
-                    class="btn btn-danger"
-                    >Delete</a
-                  >
+      <div class="container">
+        <div class="card">
+          <div class="row py-3">
+            <% detailsObj.destinations.forEach((destination) => { %>
+            <div class="col-sm-3">
+              <img
+                src="<%= destination.image %>"
+                class="card-img-top"
+                alt="..."
+              />
+              <h5><%= destination.name %></h5>
+            </div>
+            <% }) %>
+            <div class="row">
+              <% detailsObj.ticketsData.forEach((ticket) => { %>
+              <div class="col-sm-3">
+                <h6 class="card-title" style="font-weight: bold">
+                  Visit Date: <%= ticket.visit_date %>
+                </h6>
+                <h6 class="card-title" style="font-weight: bold">
+                  Qty: <%= ticket.qty %>
+                </h6>
+                <div class="row">
+                  <div class="col">
+                    <a
+                      class="btn bg-primary"
+                      style="color: white"
+                      href="/ticket/updateForm/<%= tourist.id %>/<%= ticket.id %>"
+                      >Edit</a
+                    >
+                  </div>
+                  <div class="col">
+                    <a
+                      class="btn bg-danger"
+                      style="color: white"
+                      href="/ticket/delete/<%= tourist.id %>/<%= ticket.id %>"
+                      >Delete</a
+                    >
+                  </div>
                 </div>
               </div>
               <% }) %>
             </div>
           </div>
         </div>
-        <% }) %>
       </div>
     </div>
   </body>

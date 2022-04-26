@@ -25,13 +25,14 @@
           position: absolute;
           right: 0;
         "
-        href="/tourist/addTourist"
+        href="/tourist/assignTourist"
         ><i class="fa fa-plus-square px-2"></i>Add Ticket</a
       >
     </div>
     <div class="container-fluid py-3 px-5">
       <div class="row">
-        <% summariesObj.destinations.forEach((destination) => { %>
+        <% if(summariesObj.tickets !== undefined){ %>
+        <%summariesObj.destinations.forEach((destination) => { %>
         <div class="col-sm-3">
           <div class="card" style="width: 18rem">
             <img src="<%= destination.image %>" class="card-img-top" />
@@ -40,7 +41,11 @@
             </div>
           </div>
         </div>
-        <% }) %>
+        <% }) %> <% } else { %>
+        <header class="header">
+          No tickets has been bought! Press "Add Ticket" to buy some
+        </header>
+        <% } %>
       </div>
     </div>
   </body>

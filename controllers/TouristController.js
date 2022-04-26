@@ -19,25 +19,42 @@ class TouristController {
         include: [Ticket],
       });
 
-      let destinationIds = tourist.dataValues.Tickets.map((ticket) => {
-        return ticket.dataValues.DestinationId;
+      let ticketsData = tourist.dataValues.Tickets.map((ticket) => {
+        return ticket.dataValues;
       });
 
-      let destinations = await Destination.findAll({
+      let destinationIds = ticketsData.map((ticket) => {
+        return ticket.DestinationId;
+      });
+
+      let destinationsClass = await Destination.findAll({
         where: {
           id: destinationIds,
         },
       });
-      // tourist.dataValues.Tickets.map((ticket) => {
-      //   console.log(ticket);
-      // });
-      res.render("touristDetailsPage.ejs", { tourist, destinations });
+
+      let destinations = JSON.parse(JSON.stringify(destinationsClass));
+
+      let detailsObj = {
+        ticketsData,
+        destinations,
+      };
+
+      console.log(detailsObj);
+
+      res.render("touristDetailsPage.ejs", { detailsObj, tourist });
     } catch (err) {
       res.json(err);
     }
   }
   static async displayAddTouristForm(req, res) {
     res.render("addTouristForm.ejs");
+  }
+
+  static async displayAssignTouristPage(req, res) {
+    let touristList = await Tourist.findAll();
+    console.log(touristList);
+    res.render("assignTouristPage.ejs", { touristList });
   }
   static async addTourist(req, res) {
     const { name, age, id_card_number, phone_number, nationality, photo } =
@@ -60,10 +77,26 @@ class TouristController {
   static async deleteTourist(req, res) {
     const id = Number(req.params.id);
 
+    console.log(id);
+
     try {
+      let summary = await Summary.findOne({
+        where: { TouristId: id },
+        attributes: ["TicketId"],
+      });
+
+      await Ticket.destroy({
+        where: { id: summary.TicketId },
+      });
+
+      await Summary.destroy({
+        where: { TicketId: summary.TicketId },
+      });
+
       await Tourist.destroy({
         where: { id: id },
       });
+
       res.redirect("/tourist");
     } catch (err) {
       res.json({ message: "Couldn't delete tourist" });

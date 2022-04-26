@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assign Tourist</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <%- include('header') %>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">Please Assign Tourist to Continue</header>
+      <div class="row py-3">
+        <% touristList.forEach((tourist) => { %>
+        <div class="col-sm-2">
+          <div class="card" style="width: 9rem" align="center">
+            <img src="<%= tourist.photo %>" class="card-img-top" />
+            <div class="card-body">
+              <h5 class="card-title"><%= tourist.name %></h5>
+              <form method="get" action="/ticket/addTicket/<%= tourist.id %>">
+                <button
+                  type="submit"
+                  value="Submit"
+                  class="btn-primary px-2 py-1"
+                  style="border-radius: 5px"
+                >
+                  Choose
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!-- <% touristList.forEach((tourist) => { %>
+        <form
+          class="layout"
+          action="/ticket/add/<%= tourist.id %>"
+          method="post"
+        >
+          <div class="col">
+            <div class="card" style="width: 9rem" align="center">
+              <img src="<%= tourist.photo %>" class="card-img-top" />
+              <div class="card-body">
+                <h5 class="card-title"><%= tourist.name %></h5>
+                <input
+                  type="radio"
+                  id="TouristId"
+                  name="TouristId"
+                  value="<%= tourist.id %>"
+                />
+              </div>
+            </div>
+          </div>
+          <button type="submit" name="Submit" class="btn-primary"/>Submit</button>
+          <% }) %>
+        </form> -->

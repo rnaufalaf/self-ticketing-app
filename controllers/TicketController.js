@@ -41,7 +41,7 @@ class TicketController {
           destinations,
         };
 
-        console.log(summariesObj);
+        console.log(summariesObj.tickets.length);
       }
       res.render("ticketPage.ejs", { summariesObj });
     } catch (err) {
@@ -64,7 +64,10 @@ class TicketController {
     }
   }
   static async displayAddTicketForm(req, res) {
-    res.render("addTouristForm.ejs");
+    let touristId = Number(req.params.TouristId);
+    console.log(touristId);
+    let destinations = await Destination.findAll();
+    res.render("addTicketForm.ejs", { destinations, touristId });
   }
   static async addTicket(req, res) {
     const touristId = Number(req.params.TouristId);
