@@ -3,47 +3,15 @@ const { Ticket, Summary, Destination, Tourist } = require("../models");
 class TicketController {
   static async getTickets(req, res) {
     try {
-      let summaries = await Summary.findAll({
-        include: [Ticket, Tourist],
+      let tickets = await Ticket.findAll({
+        include: [Destination],
       });
 
-      let summariesObj = {};
-      let tickets = [];
-      let tourists = [];
-      let destinationIds = [];
+      let destinations = tickets.map((ticket) => {
+        return ticket.dataValues.Destination;
+      });
 
-      if (summaries.length !== 0) {
-        tickets = summaries.map((summary) => {
-          return summary.Ticket.dataValues;
-        });
-        tourists = summaries.map((summary) => {
-          return summary.Tourist.dataValues;
-        });
-
-        destinationIds = summaries.map((summary) => {
-          return summary.Ticket.dataValues.DestinationId;
-        });
-
-        let destination = await Destination.findAll({
-          attributes: ["name", "image"],
-          where: {
-            id: destinationIds,
-          },
-        });
-
-        let destinations = destination.map((data) => {
-          return data.dataValues;
-        });
-
-        summariesObj = {
-          tickets,
-          tourists,
-          destinations,
-        };
-
-        console.log(summariesObj.tickets.length);
-      }
-      res.render("ticketPage.ejs", { summariesObj });
+      res.render("ticketPage.ejs", { tickets, destinations });
     } catch (err) {
       res.json(err);
     }
@@ -71,15 +39,23 @@ class TicketController {
   }
   static async addTicket(req, res) {
     const touristId = Number(req.params.TouristId);
-    console.log(touristId);
-    const { DestinationId, visit_date, price, qty } = req.body;
-    console.log(DestinationId);
+
+    const { DestinationId, visit_date, qty } = req.body;
+
+    let destinationPrice = await Destination.findOne({
+      attributes: ["price"],
+      where: {
+        id: DestinationId,
+      },
+    });
+
+    let grossAmount = destinationPrice.dataValues.price * qty;
 
     let ticketData = await Ticket.create({
       DestinationId,
       visit_date,
-      price,
       qty,
+      grossAmount,
     });
 
     await Summary.create({
@@ -123,11 +99,20 @@ class TicketController {
   static async updateTicket(req, res) {
     const id = Number(req.params.id);
     const touristId = Number(req.params.touristId);
-    const { DestinationId, visit_date, price, qty } = req.body;
+    const { DestinationId, visit_date, qty } = req.body;
 
     try {
+      let destinationPrice = await Destination.findOne({
+        attributes: ["price"],
+        where: {
+          id: DestinationId,
+        },
+      });
+
+      let grossAmount = destinationPrice.dataValues.price * qty;
+
       await Ticket.update(
-        { DestinationId, visit_date, price, qty },
+        { DestinationId, visit_date, qty, grossAmount },
         {
           where: {
             id: id,

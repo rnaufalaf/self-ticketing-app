@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Destinations Page</title>
+    <title>Destinations</title>
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
     <link
       rel="stylesheet"
@@ -31,31 +31,49 @@
     </div>
     <div class="container py-3">
       <div class="row">
-        <% destinations.forEach((destination) => { %>
-        <div class="card col-sm-3" style="width: 18rem">
+        <% if (destinations.length !== 0){ %> <%
+        destinations.forEach((destination) => { %>
+        <div class="card col-sm-4" style="width: 18rem">
           <img src="<%= destination.image %>" class="card-img-top" alt="..." />
           <div class="card-body">
             <h5 class="card-title"><%= destination.name %></h5>
             <p style="font-weight: bold; color: rgb(18, 79, 148)">
               <%= destination.type %>
             </p>
+            <div class="row">
+              <div class="col">
+                <p>Rp.</p>
+              </div>
+              <div class="col">
+                <% if(destination.price === 0){ %>
+                <p style="color: gold; font-weight: bold">FREE</p>
+                <% } else { %>
+                <p style="color: green; font-weight: bold">
+                  <%= destination.price %>
+                </p>
+                <% } %>
+              </div>
+            </div>
+            <p><%= destination.description %></p>
             <div class="col">
               <a
                 href="/destination/updateDestination/<%= destination.id %>"
-                class="px-3"
-                style="color: blue; font-weight: bold; text-decoration: none"
+                class="btn btn-primary"
                 >Edit</a
               >
               <a
                 href="/destination/delete/<%= destination.id %>"
-                class="px-3"
-                style="color: red; font-weight: bold; text-decoration: none"
+                class="btn btn-danger"
                 >Delete</a
               >
             </div>
           </div>
         </div>
-        <% }) %>
+        <% }) %> <% } else { %>
+        <header class="header">
+          No destinations yet! Click "Add Destination" to add more!
+        </header>
+        <% } %>
       </div>
     </div>
   </body>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tickets Page</title>
+    <title>Tickets</title>
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
     <link
       rel="stylesheet"
@@ -31,19 +31,29 @@
     </div>
     <div class="container-fluid py-3 px-5">
       <div class="row">
-        <% if(summariesObj.tickets !== undefined){ %>
-        <%summariesObj.destinations.forEach((destination) => { %>
+        <% if(tickets.length !== undefined){ %>
+        <%destinations.forEach((destination) => { %>
         <div class="col-sm-3">
-          <div class="card" style="width: 18rem">
-            <img src="<%= destination.image %>" class="card-img-top" />
-            <div class="card-body">
-              <h5 class="card-title"><%= destination.name %></h5>
-            </div>
+          <img src="<%= destination.image %>" class="card-img-top" />
+          <div class="card-body">
+            <h5 class="card-title"><%= destination.name %></h5>
+            <h6><%= destination.type %></h6>
           </div>
         </div>
-        <% }) %> <% } else { %>
+        <% }) %>
+        <div class="row px-4" style="padding-bottom: 10px">
+          <% tickets.forEach((ticket) => { %>
+          <div class="col-sm-3">
+            <p class="px-2" style="padding-bottom: 3px">
+              <%= ticket.qty %> tickets has been bought
+            </p>
+            <p>_____________________________________________</p>
+          </div>
+          <% }) %>
+        </div>
+        <% } else { %>
         <header class="header">
-          No tickets has been bought! Press "Add Ticket" to buy some
+          No tickets has been bought! Click "Add Ticket" to buy some!
         </header>
         <% } %>
       </div>

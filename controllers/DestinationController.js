@@ -28,10 +28,10 @@ class DestinationController {
   }
   static async addDestination(req, res) {
     console.log(req.body);
-    const { name, type, image } = req.body;
+    const { name, type, image, price, description } = req.body;
 
     try {
-      await Destination.create({ name, type, image });
+      await Destination.create({ name, type, image, price, description });
       res.redirect("/destination");
     } catch {
       res.json({
@@ -64,10 +64,13 @@ class DestinationController {
   }
   static async updateDestination(req, res) {
     const id = Number(req.params.id);
-    const { name, type, image } = req.body;
+    const { name, type, image, price, description } = req.body;
 
     try {
-      await Destination.update({ name, type, image }, { where: { id: id } });
+      await Destination.update(
+        { name, type, image, price, description },
+        { where: { id: id } }
+      );
       res.redirect("/destination");
     } catch {
       res.json({ message: "Couldn't update destination" });

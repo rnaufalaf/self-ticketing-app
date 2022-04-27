@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Page</title>
+    <title>Add Destination</title>
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
     <link
       rel="stylesheet"
@@ -27,6 +27,21 @@
         <div class="mb-3">
           <label for="image" class="form-label">Image URL</label>
           <input type="text" class="form-control" id="image" name="image" />
+        </div>
+        <div class="mb-3">
+          <label for="price" class="form-label">Price</label>
+          <input type="number" class="form-control" id="price" name="price" />
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Short Description</label>
+          <textarea
+            class="form-control"
+            id="description"
+            name="description"
+            rows="4"
+            cols="50"
+            placeholder="insert short description about the place"
+          ></textarea>
         </div>
         <div align="center">
           <button type="submit" value="Submit" class="btn btn-primary">

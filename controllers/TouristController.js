@@ -77,25 +77,29 @@ class TouristController {
   static async deleteTourist(req, res) {
     const id = Number(req.params.id);
 
-    console.log(id);
-
     try {
       let summary = await Summary.findOne({
         where: { TouristId: id },
         attributes: ["TicketId"],
       });
 
-      await Ticket.destroy({
-        where: { id: summary.TicketId },
-      });
+      if (summary !== null) {
+        await Ticket.destroy({
+          where: { id: summary.TicketId },
+        });
 
-      await Summary.destroy({
-        where: { TicketId: summary.TicketId },
-      });
+        await Summary.destroy({
+          where: { TicketId: summary.TicketId },
+        });
 
-      await Tourist.destroy({
-        where: { id: id },
-      });
+        await Tourist.destroy({
+          where: { id: id },
+        });
+      } else {
+        await Tourist.destroy({
+          where: { id: id },
+        });
+      }
 
       res.redirect("/tourist");
     } catch (err) {

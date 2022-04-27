@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       DestinationId: DataTypes.INTEGER,
       visit_date: DataTypes.STRING,
-      price: DataTypes.INTEGER,
       qty: DataTypes.INTEGER,
+      grossAmount: DataTypes.INTEGER,
     },
     {
       sequelize,
