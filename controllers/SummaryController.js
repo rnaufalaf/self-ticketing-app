@@ -10,7 +10,7 @@ class SummaryController {
       let summariesObj = {};
       let tickets = [];
       let tourists = [];
-      let destinationIds = [];
+      let destinations = [];
 
       if (summaries.length !== 0) {
         tickets = summaries.map((summary) => {
@@ -21,28 +21,57 @@ class SummaryController {
           return summary.Tourist.dataValues;
         });
 
-        destinationIds = summaries.map((summary) => {
+        destinations = summaries.map((summary) => {
           return summary.Ticket.dataValues.DestinationId;
         });
 
-        let ticketsData = await Ticket.findAll({
-          include: [Destination],
-          where: {
-            DestinationId: destinationIds,
-          },
-        });
+        function destinationData() {
+          let promises = destinations.map((destination) => {
+            return Destination.findOne({
+              where: {
+                id: destination,
+              },
+            });
+          });
+          return Promise.all(promises);
+        }
 
-        let destinations = ticketsData.map((data) => {
-          return data.dataValues.Destination;
-        });
+        destinationData().then((result) => {
+          destinations = JSON.parse(JSON.stringify(result));
+          summariesObj = {
+            tickets,
+            tourists,
+            destinations,
+          };
 
-        summariesObj = {
-          tickets,
-          tourists,
-          destinations,
-        };
+          res.render("summaryPage.ejs", { summariesObj });
+        });
+      } else {
+        summariesObj = null;
+        res.render("summaryPage.ejs", { summariesObj });
       }
-      res.render("summaryPage.ejs", { summariesObj });
+    } catch (err) {
+      res.json(err);
+    }
+  }
+
+  static async addTouristToTicket(req, res) {
+    try {
+      const ticketId = Number(req.params.ticketId);
+      const touristId = Number(req.params.touristId);
+
+      let ticketData = await Ticket.findOne({
+        where: {
+          id: ticketId,
+        },
+      });
+
+      if (ticketData.length !== null) {
+        await Summary.create({ TicketId: ticketId, TouristId: touristId });
+        res.render("assignTouristAgain.ejs", { ticketId });
+      } else {
+        res.json({ message: "User not found" });
+      }
     } catch (err) {
       res.json(err);
     }

@@ -22,7 +22,10 @@
             <img src="<%= tourist.photo %>" class="card-img-top" />
             <div class="card-body">
               <h5 class="card-title"><%= tourist.name %></h5>
-              <form method="get" action="/ticket/addTicket/<%= tourist.id %>">
+              <form
+                method="get"
+                action="/summary/addTouristToTicket/<%= ticketId %>/<%= tourist.id %>"
+              >
                 <button
                   type="submit"
                   value="Submit"
@@ -40,3 +43,27 @@
     </div>
   </body>
 </html>
+
+<!-- <% touristList.forEach((tourist) => { %>
+        <form
+          class="layout"
+          action="/ticket/add/<%= tourist.id %>"
+          method="post"
+        >
+          <div class="col">
+            <div class="card" style="width: 9rem" align="center">
+              <img src="<%= tourist.photo %>" class="card-img-top" />
+              <div class="card-body">
+                <h5 class="card-title"><%= tourist.name %></h5>
+                <input
+                  type="radio"
+                  id="TouristId"
+                  name="TouristId"
+                  value="<%= tourist.id %>"
+                />
+              </div>
+            </div>
+          </div>
+          <button type="submit" name="Submit" class="btn-primary"/>Submit</button>
+          <% }) %>
+        </form> -->

@@ -23,6 +23,8 @@ class TouristController {
         return ticket.dataValues;
       });
 
+      console.log(ticketsData);
+
       let destinationIds = ticketsData.map((ticket) => {
         return ticket.DestinationId;
       });
@@ -55,6 +57,12 @@ class TouristController {
     let touristList = await Tourist.findAll();
     console.log(touristList);
     res.render("assignTouristPage.ejs", { touristList });
+  }
+  static async displayAssignTouristAgain(req, res) {
+    const ticketId = Number(req.params.ticketId);
+    let touristList = await Tourist.findAll();
+    console.log(touristList);
+    res.render("assignTouristAgainPage.ejs", { ticketId, touristList });
   }
   static async addTourist(req, res) {
     const { name, age, id_card_number, phone_number, nationality, photo } =

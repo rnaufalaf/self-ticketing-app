@@ -17,21 +17,25 @@
     <div class="container-fluid py-3">
       <table class="table-bordered">
         <tbody>
+          <% if(summariesObj !== null){ %>
           <tr>
             <th>ID</th>
-            <% summariesObj.tickets.forEach((summary) => { %>
+            <% if(summariesObj.tickets !== undefined){ %> <%
+            summariesObj.tickets.forEach((summary) => { %>
             <td><%= summary.id %></td>
-            <% }) %>
+            <% }) %> <% } %>
           </tr>
           <tr>
             <th>Tourist Name</th>
-            <% summariesObj.tourists.forEach((tourist) => { %>
+            <% if(summariesObj.tourists !== undefined){ %> <%
+            summariesObj.tourists.forEach((tourist) => { %>
             <td><%= tourist.name %></td>
-            <% }) %>
+            <% }) %> <% } %>
           </tr>
           <tr>
             <th>Destination Name</th>
-            <% summariesObj.destinations.forEach((destination) => { %>
+            <% if(summariesObj.destinations !== undefined){ %> <%
+            summariesObj.destinations.forEach((destination) => { %>
             <td><%= destination.name %></td>
             <% }) %>
           </tr>
@@ -39,11 +43,12 @@
             <th>Destination Photo</th>
             <% summariesObj.destinations.forEach((destination) => { %>
             <td><img class="card-img" src="<%= destination.image %>" /></td>
-            <% }) %>
+            <% }) %> <% } %>
           </tr>
           <tr>
             <th>Ticket Qty</th>
-            <% summariesObj.tickets.forEach((ticket) => { %>
+            <% if(summariesObj.tickets !== undefined){ %> <%
+            summariesObj.tickets.forEach((ticket) => { %>
             <td><%= ticket.qty %></td>
             <% }) %>
           </tr>
@@ -51,8 +56,11 @@
             <th>Gross Amount</th>
             <% summariesObj.tickets.forEach((ticket) => { %>
             <td><%= ticket.grossAmount %></td>
-            <% }) %>
+            <% }) %> <% } %>
           </tr>
+          <% } else { %>
+          <header class="header">No Data yet, Please add Tickets first!</header>
+          <% } %>
         </tbody>
       </table>
     </div>

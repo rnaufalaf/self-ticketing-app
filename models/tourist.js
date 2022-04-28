@@ -13,12 +13,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   Tourist.init(
     {
-      name: DataTypes.STRING,
-      age: DataTypes.INTEGER,
-      id_card_number: DataTypes.STRING,
-      phone_number: DataTypes.STRING,
-      nationality: DataTypes.STRING,
-      photo: DataTypes.STRING,
+      name: { type: DataTypes.STRING, allowNull: false },
+      age: { type: DataTypes.INTEGER, allowNull: false },
+      id_card_number: { type: DataTypes.STRING, allowNull: false },
+      phone_number: { type: DataTypes.STRING, allowNull: false },
+      nationality: { type: DataTypes.STRING, allowNull: false },
+      photo: { type: DataTypes.STRING, allowNull: false },
     },
     {
       sequelize,

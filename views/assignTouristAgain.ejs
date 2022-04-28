@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <%- include('header') %>
+  </head>
+  <body>
+    <header class="header">Add Tourist Again ?</header>
+    <div class="container py-5" align="center">
+      <div class="row">
+        <div class="col">
+          <a
+            class="btn btn-primary"
+            href="/tourist/assignTouristAgain/<%= ticketId %>"
+            >YES</a
+          >
+          <a class="btn btn-danger" href="/ticket/">NO</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

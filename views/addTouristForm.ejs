@@ -21,11 +21,23 @@
       <form class="layout" action="/tourist/add/" method="post">
         <div class="mb-3">
           <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control" id="name" name="name" />
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            required
+          />
         </div>
         <div class="mb-3">
           <label for="age" class="form-label">Age</label>
-          <input type="number" class="form-control" id="age" name="age" />
+          <input
+            type="number"
+            class="form-control"
+            id="age"
+            name="age"
+            required
+          />
         </div>
         <div class="mb-3">
           <label for="id_card_number" class="form-label">ID</label>
@@ -34,6 +46,7 @@
             class="form-control"
             id="id_card_number"
             name="id_card_number"
+            required
           />
         </div>
         <div class="mb-3">
@@ -43,6 +56,7 @@
             class="form-control"
             id="phone_number"
             name="phone_number"
+            required
           />
         </div>
         <div class="mb-3">
@@ -52,11 +66,18 @@
             class="form-control"
             id="nationality"
             name="nationality"
+            required
           />
         </div>
         <div class="mb-3">
           <label for="photo" class="form-label">Photo URL</label>
-          <input type="text" class="form-control" id="photo" name="photo" />
+          <input
+            type="text"
+            class="form-control"
+            id="photo"
+            name="photo"
+            required
+          />
         </div>
         <div align="center">
           <button type="submit" value="Submit" class="btn btn-primary">

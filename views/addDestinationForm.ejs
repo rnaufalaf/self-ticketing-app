@@ -18,19 +18,43 @@
       <form class="layout" action="/destination/add" method="post">
         <div class="mb-3">
           <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control" id="name" name="name" />
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            required
+          />
         </div>
         <div class="mb-3">
           <label for="type" class="form-label">Type</label>
-          <input type="text" class="form-control" id="type" name="type" />
+          <input
+            type="text"
+            class="form-control"
+            id="type"
+            name="type"
+            required
+          />
         </div>
         <div class="mb-3">
           <label for="image" class="form-label">Image URL</label>
-          <input type="text" class="form-control" id="image" name="image" />
+          <input
+            type="text"
+            class="form-control"
+            id="image"
+            name="image"
+            required
+          />
         </div>
         <div class="mb-3">
           <label for="price" class="form-label">Price</label>
-          <input type="number" class="form-control" id="price" name="price" />
+          <input
+            type="number"
+            class="form-control"
+            id="price"
+            name="price"
+            required
+          />
         </div>
         <div class="mb-3">
           <label for="description" class="form-label">Short Description</label>
@@ -41,6 +65,7 @@
             rows="4"
             cols="50"
             placeholder="insert short description about the place"
+            required
           ></textarea>
         </div>
         <div align="center">

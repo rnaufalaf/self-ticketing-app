@@ -36,25 +36,26 @@
           <header class="header">
             No tourists yet! Click "Add Tourist" to start adding tourists!
           </header>
-          <% } else { %> <% tourists.forEach((tourist) => { %>
-          <div class="col-sm-3" style="padding: 5px">
-            <div class="card" style="width: 18rem">
-              <div class="row">
-                <div class="col">
-                  <img src="<%= tourist.photo %>" class="avatar" />
-                </div>
-                <div class="col" style="padding-top: 8px; padding-right: 50px">
+          <% } else %>
+          <div class="row py-3">
+            <% tourists.forEach((tourist) => { %>
+            <div class="col-sm-2">
+              <div class="card" style="width: 9rem" align="center">
+                <img src="<%= tourist.photo %>" class="card-img-top" />
+                <div class="card-body">
+                  <h5 class="card-title"><%= tourist.name %></h5>
                   <a
-                    style="font-weight: bold; text-decoration: none"
                     href="/tourist/<%= tourist.id %>"
+                    class="btn-primary px-2 py-1"
+                    style="border-radius: 5px; text-decoration: none"
                   >
-                    <%= tourist.name %>
+                    Choose
                   </a>
                 </div>
               </div>
             </div>
+            <% }) %>
           </div>
-          <% }) %> <% } %>
         </div>
       </div>
     </div>

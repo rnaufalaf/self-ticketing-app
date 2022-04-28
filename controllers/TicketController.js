@@ -58,21 +58,37 @@ class TicketController {
       grossAmount,
     });
 
+    let ticketId = ticketData.dataValues.id;
+
     await Summary.create({
       TicketId: ticketData.dataValues.id,
       TouristId: touristId,
     });
 
-    res.redirect("/ticket");
+    res.render("assignTouristAgain.ejs", { ticketId });
   }
   static async deleteTicket(req, res) {
     const id = Number(req.params.id);
     const touristId = Number(req.params.touristId);
     try {
-      await Ticket.destroy({
+      let summaryData = await Summary.findAll({
         where: {
-          id: id,
+          TicketId: id,
         },
+      });
+
+      let summaryIds = summaryData.map((summary) => {
+        return summary.dataValues.id;
+      });
+
+      let ticketData = await Summary.findAll({
+        where: {
+          id: summaryIds,
+        },
+      });
+
+      let ticketIds = ticketData.map((ticket) => {
+        return ticket.dataValues.TicketId;
       });
 
       await Summary.destroy({
@@ -80,6 +96,13 @@ class TicketController {
           TicketId: id,
         },
       });
+
+      await Ticket.destroy({
+        where: {
+          id: id,
+        },
+      });
+
       res.redirect(`/tourist/${touristId}`);
     } catch {
       res.json({

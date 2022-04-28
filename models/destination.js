@@ -13,11 +13,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Destination.init(
     {
-      name: DataTypes.STRING,
-      type: DataTypes.STRING,
-      image: DataTypes.STRING,
-      price: DataTypes.INTEGER,
-      description: DataTypes.STRING,
+      name: { type: DataTypes.STRING, allowNull: false },
+      type: { type: DataTypes.STRING, allowNull: false },
+      image: { type: DataTypes.STRING, allowNull: false },
+      price: { type: DataTypes.INTEGER, allowNull: false },
+      description: { type: DataTypes.STRING, allowNull: false },
     },
     {
       sequelize,

@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
   Ticket.init(
     {
       DestinationId: DataTypes.INTEGER,
-      visit_date: DataTypes.STRING,
-      qty: DataTypes.INTEGER,
+      visit_date: { type: DataTypes.STRING, allowNull: false },
+      qty: { type: DataTypes.INTEGER, allowNull: false },
       grossAmount: DataTypes.INTEGER,
     },
     {

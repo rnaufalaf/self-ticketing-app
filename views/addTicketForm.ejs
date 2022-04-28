@@ -29,6 +29,7 @@
                   id="DestinationId"
                   name="DestinationId"
                   value="<%= destination.id %>"
+                  required
                 />
               </div>
             </div>
@@ -42,11 +43,18 @@
             class="form-control"
             id="visit_date"
             name="visit_date"
+            required
           />
         </div>
         <div class="mb-3">
           <label for="qty" class="form-label">Quantity</label>
-          <input type="number" class="form-control" id="qty" name="qty" />
+          <input
+            type="number"
+            class="form-control"
+            id="qty"
+            name="qty"
+            required
+          />
         </div>
         <div align="center">
           <button type="submit" value="Submit" class="btn btn-primary">

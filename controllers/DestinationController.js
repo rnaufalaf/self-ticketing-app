@@ -1,4 +1,4 @@
-const { Destination } = require("../models");
+const { Destination, Ticket, Summary } = require("../models");
 
 class DestinationController {
   static async getDestinations(req, res) {
@@ -43,9 +43,28 @@ class DestinationController {
     const id = Number(req.params.id);
 
     try {
+      let ticketData = await Ticket.findAll({
+        where: { DestinationId: id },
+      });
+
+      let ticketIds = ticketData.map((ticketId) => {
+        return ticketId.dataValues.id;
+      });
+
+      console.log(ticketIds);
+
+      await Summary.destroy({
+        where: { TicketId: ticketIds },
+      });
+
+      await Ticket.destroy({
+        where: { id: ticketIds },
+      });
+
       await Destination.destroy({
         where: { id: id },
       });
+
       res.redirect("/destination");
     } catch {
       res.json({ message: "Couldn't delete destination" });
